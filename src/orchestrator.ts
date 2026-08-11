@@ -169,6 +169,98 @@ export abstract class BaseAgent {
   reset(): void {
     this.conversationHistory = [];
   }
+
+  /**
+   * Run the agent with an isolated conversation history.
+   * Safe for concurrent use — each call gets its own message array,
+   * so multiple fanOut tasks on the same agent instance don't collide.
+   */
+  async runIsolated(userMessage: string): Promise<AgentRunResult> {
+    logger.info(this.name, 'starting isolated task', { preview: userMessage.slice(0, 100) });
+
+    const localHistory: MessageParam[] = [{ role: 'user', content: userMessage }];
+
+    let inputTokens = 0;
+    let outputTokens = 0;
+    let toolRounds = 0;
+
+    while (toolRounds <= this.config.maxToolRounds) {
+      const response = await this.client.messages.create({
+        model: this.config.model,
+        max_tokens: this.config.maxTokens,
+        temperature: this.config.temperature,
+        system: this.config.systemPrompt,
+        tools: this.tools.map(t => t.definition),
+        messages: localHistory,
+      });
+
+      inputTokens += response.usage.input_tokens;
+      outputTokens += response.usage.output_tokens;
+
+      const toolUseBlocks = response.content.filter(b => b.type === 'tool_use');
+      const textBlocks = response.content.filter(b => b.type === 'text');
+
+      localHistory.push({ role: 'assistant', content: response.content });
+
+      if (response.stop_reason === 'end_turn' || toolUseBlocks.length === 0) {
+        const text = textBlocks.map(b => (b.type === 'text' ? b.text : '')).join('');
+        logger.info(this.name, 'isolated task complete', { toolRounds, inputTokens, outputTokens });
+        return {
+          agentName: this.name,
+          text,
+          usage: { inputTokens, outputTokens, totalTokens: inputTokens + outputTokens },
+          toolRounds,
+          hitRoundLimit: false,
+        };
+      }
+
+      toolRounds++;
+      if (toolRounds > this.config.maxToolRounds) {
+        const text = textBlocks.map(b => (b.type === 'text' ? b.text : '')).join('');
+        logger.warn(this.name, 'isolated task hit max tool rounds', { maxToolRounds: this.config.maxToolRounds });
+        return {
+          agentName: this.name,
+          text,
+          usage: { inputTokens, outputTokens, totalTokens: inputTokens + outputTokens },
+          toolRounds,
+          hitRoundLimit: true,
+        };
+      }
+
+      const toolResults = await Promise.all(
+        toolUseBlocks.map(async block => {
+          if (block.type !== 'tool_use') return null;
+          const tool = this.tools.find(t => t.definition.name === block.name);
+          logger.debug(this.name, `executing tool (isolated): ${block.name}`);
+
+          let resultContent: string;
+          if (!tool) {
+            resultContent = `Error: Unknown tool "${block.name}"`;
+          } else {
+            try {
+              resultContent = await tool.execute(block.input as Record<string, unknown>);
+            } catch (err) {
+              resultContent = `Tool error: ${err instanceof Error ? err.message : String(err)}`;
+              logger.warn(this.name, `tool "${block.name}" failed`, { error: resultContent });
+            }
+          }
+
+          return {
+            type: 'tool_result' as const,
+            tool_use_id: block.id,
+            content: resultContent,
+          };
+        })
+      );
+
+      localHistory.push({
+        role: 'user',
+        content: toolResults.filter(Boolean) as NonNullable<typeof toolResults[number]>[],
+      });
+    }
+
+    throw new Error(`${this.name}: Unexpected loop exit in isolated run`);
+  }
 }
 
 // ─── Orchestrator ────────────────────────────────────────────────────────────
@@ -291,10 +383,10 @@ export class Orchestrator {
       const batchResults = await Promise.all(
         batch.map(async (task, batchIdx) => {
           const agent = this.getAgent(agentName);
-          // Each parallel execution needs a fresh conversation
-          agent.reset();
+          // Use runIsolated — each task gets its own conversation history
+          // so concurrent tasks don't corrupt each other's state
           logger.debug('orchestrator', `fan-out task ${i + batchIdx + 1}/${tasks.length} started`);
-          return agent.run(task);
+          return agent.runIsolated(task);
         })
       );
 

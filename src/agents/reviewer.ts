@@ -162,7 +162,7 @@ Be direct. "This is unclear" is not actionable. "The sentence starting 'The syst
     super(tools, {
       name: 'reviewer',
       systemPrompt,
-      model: config.model,
+      ...(config.model !== undefined ? { model: config.model } : {}),
       maxTokens: config.maxTokens ?? 4096,
       maxToolRounds: 5,
     });

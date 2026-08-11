@@ -16,7 +16,11 @@
     "dev": "tsc --watch",
     "example:research": "node --env-file=.env dist/examples/research-pipeline.js",
     "example:fanout": "node --env-file=.env dist/examples/fan-out-analysis.js",
-    "example:supervisor": "node --env-file=.env dist/examples/supervised-workflow.js"
+    "example:supervisor": "node --env-file=.env dist/examples/supervised-workflow.js",
+    "test": "npx tsx tests/shared-memory.test.ts && npx tsx tests/orchestrator.test.ts && npx tsx tests/patterns.test.ts",
+    "test:memory": "npx tsx tests/shared-memory.test.ts",
+    "test:orchestrator": "npx tsx tests/orchestrator.test.ts",
+    "test:patterns": "npx tsx tests/patterns.test.ts"
   },
   "keywords": [
     "claude",
@@ -35,8 +39,9 @@
     "zod": "^3.23.0"
   },
   "devDependencies": {
-    "typescript": "^5.5.0",
-    "@types/node": "^22.0.0"
+    "@types/node": "^22.0.0",
+    "tsx": "^4.23.12",
+    "typescript": "^5.5.0"
   },
   "engines": {
     "node": ">=20.0.0"

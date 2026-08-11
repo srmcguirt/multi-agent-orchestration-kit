@@ -442,7 +442,9 @@ src/
   memory/
     shared-memory.ts    # SharedMemory implementation
   examples/
-    research-pipeline.ts  # Full working example
+    research-pipeline.ts    # Pipeline: research → write → review
+    fan-out-analysis.ts     # Fan-out: parallel research + aggregation
+    supervised-workflow.ts  # Supervisor: dynamic task routing
 ```
 
 ---
