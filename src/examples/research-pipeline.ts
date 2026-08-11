@@ -27,7 +27,7 @@ import {
 // ─── Configuration ──────────────────────────────────────────────────────────
 
 const TOPIC = process.argv[2] ?? 'Multi-agent orchestration patterns in production AI systems';
-const MODEL = process.env['DEFAULT_MODEL'] ?? undefined;
+const MODEL = process.env['DEFAULT_MODEL'];
 
 // ─── Main ────────────────────────────────────────────────────────────────────
 
@@ -41,13 +41,13 @@ async function main() {
   const memory = new SharedMemory();
 
   // 2. Create agents — each one takes shared memory so they can exchange data
-  const researcher = new ResearchAgent(memory, { model: MODEL });
+  const researcher = new ResearchAgent(memory, MODEL ? { model: MODEL } : {});
   const writer = new WriterAgent(memory, {
-    model: MODEL,
+    ...(MODEL ? { model: MODEL } : {}),
     outputFormat: 'blog-post',
   });
   const reviewer = new ReviewerAgent(memory, {
-    model: MODEL,
+    ...(MODEL ? { model: MODEL } : {}),
     mode: 'content',
   });
 

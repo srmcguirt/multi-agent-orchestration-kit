@@ -131,9 +131,9 @@ export function takeMostDetailed(results: AgentRunResult[]): string {
 export function majorityVote(keyword: string): (results: AgentRunResult[]) => string {
   return (results) => {
     const votes = results.map(r =>
-      r.text.toLowerCase().includes(keyword.toLowerCase()) ? 1 : 0
+      r.text.toLowerCase().includes(keyword.toLowerCase()) ? 1 as number : 0 as number
     );
-    const yesVotes = votes.reduce((sum, v) => sum + v, 0);
+    const yesVotes = votes.reduce<number>((sum, v) => sum + v, 0);
     const noVotes = results.length - yesVotes;
     return JSON.stringify({
       decision: yesVotes > noVotes ? keyword : `not_${keyword}`,

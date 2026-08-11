@@ -449,6 +449,25 @@ src/
 
 ---
 
+## Testing
+
+```bash
+# Run all tests (no API key needed — tests cover pure logic)
+npm test
+
+# Run individual test suites
+npm run test:memory       # SharedMemory: set/get/TTL/snapshot
+npm run test:orchestrator # Orchestrator: registration, routing, validation
+npm run test:patterns     # Aggregators, pipeline helpers, extractFinalContent
+```
+
+39 unit tests covering:
+- SharedMemory: CRUD, TTL expiry, snapshot/restore, agent attribution
+- Orchestrator: registration, lookup, chaining, error handling
+- Patterns: all 4 aggregators, pipeline stage builders, content extraction
+
+---
+
 ## License
 
 MIT -- see [LICENSE](./LICENSE).

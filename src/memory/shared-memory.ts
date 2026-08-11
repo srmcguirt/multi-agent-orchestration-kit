@@ -37,7 +37,7 @@ export class SharedMemory {
       value,
       storedAt: now.toISOString(),
       storedBy,
-      expiresAt: ttlMs ? new Date(now.getTime() + ttlMs).toISOString() : undefined,
+      ...(ttlMs !== undefined ? { expiresAt: new Date(now.getTime() + ttlMs).toISOString() } : {}),
     };
     this.entries.set(key, entry as MemoryEntry);
   }

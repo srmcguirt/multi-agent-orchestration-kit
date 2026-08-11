@@ -2,6 +2,18 @@
 
 All notable changes to the Multi-Agent Orchestration Kit.
 
+## [1.0.1] — 2026-08-11
+
+### Fixed
+- **Critical: Fan-out concurrency bug** — Parallel tasks in `fanOut()` previously shared the same agent's `conversationHistory`, causing race conditions when multiple tasks ran concurrently. Added `runIsolated()` method to `BaseAgent` that uses a local conversation history per call, ensuring clean parallel execution.
+- Fixed strict TypeScript errors with `exactOptionalPropertyTypes` in SharedMemory and example files.
+- Updated User-Agent string from MCPForge to WireForge in ResearchAgent.
+
+### Added
+- `BaseAgent.runIsolated()` — Runs agent with isolated conversation state, safe for concurrent use.
+- 39 unit tests across 3 test suites (SharedMemory, Orchestrator, Patterns).
+- `.gitignore` for proper repo hygiene.
+
 ## [1.0.0] — 2026-08-11
 
 ### Added
