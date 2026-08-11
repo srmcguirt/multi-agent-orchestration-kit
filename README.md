@@ -1,6 +1,6 @@
 # @wireforge/multi-agent-kit
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white) ![Node](https://img.shields.io/badge/Node-%3E%3D18-339933?logo=node.js&logoColor=white) ![Patterns](https://img.shields.io/badge/Patterns-3-purple)
+[![CI](https://github.com/srmcguirt/multi-agent-orchestration-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/srmcguirt/multi-agent-orchestration-kit/actions/workflows/ci.yml) ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white) ![Node](https://img.shields.io/badge/Node-%3E%3D18-339933?logo=node.js&logoColor=white) ![Patterns](https://img.shields.io/badge/Patterns-3-purple)
 
 Production-ready multi-agent orchestration for Claude. Three composable patterns, shared memory, and real tool-calling agents -- ready to drop into your codebase.
 
