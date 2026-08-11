@@ -1,0 +1,48 @@
+{
+  "name": "@wireforge/multi-agent-kit",
+  "version": "1.0.0",
+  "description": "Production-ready multi-agent orchestration kit for Claude — pipeline, fan-out, and supervisor patterns with shared memory",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "example:research": "node --env-file=.env dist/examples/research-pipeline.js",
+    "example:fanout": "node --env-file=.env dist/examples/fan-out-analysis.js",
+    "example:supervisor": "node --env-file=.env dist/examples/supervised-workflow.js"
+  },
+  "keywords": [
+    "claude",
+    "anthropic",
+    "multi-agent",
+    "ai-agents",
+    "orchestration",
+    "mcp",
+    "llm",
+    "typescript"
+  ],
+  "author": "WireForge",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.51.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^22.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/srmcguirt/multi-agent-orchestration-kit"
+  }
+}
