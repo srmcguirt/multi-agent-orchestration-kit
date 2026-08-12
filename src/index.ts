@@ -12,7 +12,6 @@ export { Orchestrator, BaseAgent } from './orchestrator.js';
 export { SharedMemory } from './memory/shared-memory.js';
 
 // Built-in Agents
-export { ResearchAgent } from './agents/researcher.js';
 export { WriterAgent } from './agents/writer.js';
 export type { WriterOutputFormat } from './agents/writer.js';
 export { ReviewerAgent } from './agents/reviewer.js';
