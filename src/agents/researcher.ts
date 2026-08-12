@@ -124,7 +124,7 @@ function makeUrlFetchTool(): AgentTool {
         const timeout = setTimeout(() => controller.abort(), 10000);
         const response = await fetch(url, {
           signal: controller.signal,
-          headers: { 'User-Agent': 'WireForge-ResearchAgent/1.0' },
+          headers: { 'User-Agent': 'srmcguirt-ResearchAgent/1.0' },
         });
         clearTimeout(timeout);
 
