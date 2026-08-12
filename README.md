@@ -466,8 +466,24 @@ npm run test:patterns     # Aggregators, pipeline helpers, extractFinalContent
 
 ---
 
+## 💼 Get the Full Kit
+
+**[Multi-Agent Orchestration Kit — $79 on Gumroad](https://srmcguirt.gumroad.com/l/multi-agent-kit)**
+
+Includes full source, ZIP download, and lifetime updates. MIT licensed — use commercially, modify freely.
+
+Also in the lineup:
+- [MCP Server Starter Kit](https://srmcguirt.gumroad.com/l/mcp-starter) (Free / $49) — TypeScript MCP boilerplate
+- [Claude Agent Boilerplate](https://srmcguirt.gumroad.com/l/claude-agent) ($29) — tool-use loop + streaming
+- [MCP Vertical Server Bundle](https://srmcguirt.gumroad.com/l/mcp-vertical-bundle) ($99) — GitHub/Slack/Notion MCP servers
+- [DevOps Prompt Pack](https://srmcguirt.gumroad.com/l/devops-prompt-pack) ($29) — 8 system prompts for Terraform/K8s/CI/CD
+
+→ [Full lineup](https://wireforge.fellwork.workers.dev)
+
+---
+
 ## License
 
-MIT -- see [LICENSE](./LICENSE).
+MIT — see [LICENSE](./LICENSE).
 
-Built by [WireForge](https://srmcguirt.gumroad.com).
+Built by [Shane McGuirt](https://wireforge.fellwork.workers.dev).
