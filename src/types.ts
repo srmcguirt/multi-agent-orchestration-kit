@@ -20,7 +20,7 @@ export interface AgentConfig {
   name: string;
   /** System prompt defining the agent's role and capabilities */
   systemPrompt: string;
-  /** Claude model to use (default: claude-opus-4-5) */
+  /** Claude model to use (default: claude-opus-5) */
   model?: string;
   /** Max output tokens (default: 4096) */
   maxTokens?: number;

@@ -29,7 +29,7 @@ class SupervisorAgent extends BaseAgent {
     super([] as AgentTool[], {
       name: 'supervisor',
       systemPrompt: buildSupervisorSystemPrompt(workerDescriptions),
-      model: process.env['DEFAULT_MODEL'] ?? 'claude-opus-4-5',
+      model: process.env['DEFAULT_MODEL'] ?? 'claude-opus-5',
       maxTokens: 2048,
       maxToolRounds: 0, // Supervisor doesn't use tools directly
     });

@@ -47,7 +47,7 @@ export abstract class BaseAgent {
   constructor(tools: AgentTool[], config: AgentConfig) {
     this.client = new Anthropic({ apiKey: process.env['ANTHROPIC_API_KEY'] });
     this.config = {
-      model: config.model ?? (process.env['DEFAULT_MODEL'] || 'claude-opus-4-5'),
+      model: config.model ?? (process.env['DEFAULT_MODEL'] || 'claude-opus-5'),
       maxTokens: config.maxTokens ?? 4096,
       maxToolRounds: config.maxToolRounds ?? 10,
       temperature: config.temperature ?? 1,
