@@ -1,5 +1,5 @@
 {
-  "name": "@wireforge/multi-agent-kit",
+  "name": "@srmcguirt/multi-agent-kit",
   "version": "1.0.1",
   "description": "Production-ready multi-agent orchestration kit for Claude — pipeline, fan-out, and supervisor patterns with shared memory",
   "type": "module",
